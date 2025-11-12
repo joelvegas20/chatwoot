@@ -36,6 +36,14 @@
     "REDIS_OPENSSL_VERIFY_MODE":{
       "description": "OpenSSL verification mode for Redis connections. ref https://help.heroku.com/HC0F8CUS/redis-connection-issues",
       "value": "none"
+    },
+    "NODE_OPTIONS": {
+      "description": "Increase V8 heap for Vite build to avoid OOM",
+      "value": "--max-old-space-size=4096"
+    },
+    "APP_NAME": {
+      "description": "Application name for white-labeling (replaces Chatwoot branding)",
+      "value": "Chatwoot"
     }
   },
   "formation": {
