@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_10_03_091242) do
+ActiveRecord::Schema[7.1].define(version: 2025_11_13_171110) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -291,6 +291,13 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_03_091242) do
     t.text "content"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.string "status", default: "active", null: false
+    t.string "canned_type", default: "generic", null: false
+    t.string "category", default: "general", null: false
+    t.string "template_id"
+    t.bigint "inbox_id"
+    t.string "base_short_code"
+    t.index ["inbox_id"], name: "index_canned_responses_on_inbox_id"
   end
 
   create_table "captain_assistant_responses", force: :cascade do |t|
@@ -577,8 +584,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_03_091242) do
     t.bigint "account_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["account_id", "domain"], name: "index_companies_on_account_and_domain", unique: true, where: "(domain IS NOT NULL)"
     t.index ["account_id"], name: "index_companies_on_account_id"
-    t.index ["domain", "account_id"], name: "index_companies_on_domain_and_account_id"
     t.index ["name", "account_id"], name: "index_companies_on_name_and_account_id"
   end
 
@@ -1105,6 +1112,19 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_03_091242) do
     t.index ["user_id"], name: "index_reporting_events_on_user_id"
   end
 
+  create_table "sidebar_apps", force: :cascade do |t|
+    t.string "title", null: false
+    t.jsonb "content", default: []
+    t.bigint "account_id", null: false
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "icon", default: "i-lucide-app-window"
+    t.boolean "visible", default: true
+    t.index ["account_id"], name: "index_sidebar_apps_on_account_id"
+    t.index ["user_id"], name: "index_sidebar_apps_on_user_id"
+  end
+
   create_table "sla_events", force: :cascade do |t|
     t.bigint "applied_sla_id", null: false
     t.bigint "conversation_id", null: false
@@ -1251,6 +1271,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_03_091242) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "canned_responses", "inboxes"
   add_foreign_key "inboxes", "portals"
   create_trigger("accounts_after_insert_row_tr", :generated => true, :compatibility => 1).
       on("accounts").

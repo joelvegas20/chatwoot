@@ -1,11 +1,14 @@
 class Api::V1::Accounts::Integrations::AppsController < Api::V1::Accounts::BaseController
-  before_action :check_admin_authorization?, except: [:index, :show]
   before_action :fetch_apps, only: [:index]
   before_action :fetch_app, only: [:show]
 
-  def index; end
+  def index
+    render json: { payload: @apps.map { |app| app_to_json(app) } }
+  end
 
-  def show; end
+  def show
+    render json: { payload: app_to_json(@app) }
+  end
 
   private
 
@@ -15,5 +18,15 @@ class Api::V1::Accounts::Integrations::AppsController < Api::V1::Accounts::BaseC
 
   def fetch_app
     @app = Integrations::App.find(id: params[:id])
+  end
+
+  def app_to_json(app)
+    {
+      id: app.id,
+      name: app.name,
+      description: app.description,
+      logo: app.logo,
+      enabled: app.enabled?(Current.account)
+    }
   end
 end

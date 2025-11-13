@@ -5,6 +5,8 @@ import IntegrationHooks from './IntegrationHooks.vue';
 import Index from './Index.vue';
 import Webhook from './Webhooks/Index.vue';
 import DashboardApps from './DashboardApps/Index.vue';
+import SidebarApps from './SidebarApps/Index.vue';
+import SidebarAppView from './SidebarApps/SidebarAppView.vue';
 import Slack from './Slack.vue';
 import SettingsContent from '../Wrapper.vue';
 import Linear from './Linear.vue';
@@ -35,6 +37,26 @@ export default {
             featureFlag: FEATURE_FLAGS.INTEGRATIONS,
             permissions: ['administrator'],
           },
+        },
+        {
+          path: 'sidebar_apps',
+          component: SidebarApps,
+          name: 'settings_integrations_sidebar_apps',
+          meta: {
+            featureFlag: FEATURE_FLAGS.INTEGRATIONS,
+            permissions: ['administrator'],
+          },
+        },
+        {
+          path: 'sidebar_apps/:appId',
+          component: SidebarAppView,
+          name: 'sidebar_app_view',
+          meta: {
+            permissions: ['administrator'],
+          },
+          props: route => ({
+            appId: parseInt(route.params.appId, 10),
+          }),
         },
         {
           path: 'webhook',

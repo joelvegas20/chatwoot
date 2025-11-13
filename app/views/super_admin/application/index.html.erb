@@ -23,6 +23,19 @@ It renders the `_table` partial to display details about the resources.
 [1]: http://www.rubydoc.info/gems/administrate/Administrate/Page/Collection
 %>
 
+<% content_for(:stylesheet) do %>
+  <style>
+    .button {
+      background-color: #cd6525 !important;
+      border-color: #cd6525 !important;
+    }
+    .button:hover {
+      background-color: #b85520 !important;
+      border-color: #b85520 !important;
+    }
+  </style>
+<% end %>
+
 <% content_for(:title) do %>
   <%= display_resource_name(page.resource_name) %>
 <% end %>

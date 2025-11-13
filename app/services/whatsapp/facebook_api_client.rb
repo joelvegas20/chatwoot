@@ -6,6 +6,79 @@ class Whatsapp::FacebookApiClient
     @api_version = GlobalConfigService.load('WHATSAPP_API_VERSION', 'v22.0')
   end
 
+  def get_templates(waba_id:)
+    response = HTTParty.get(
+      "#{BASE_URI}/#{@api_version}/#{waba_id}/message_templates",
+      headers: request_headers
+    )
+    handle_response(response, 'Failed to fetch WhatsApp templates')
+  end
+
+  def create_template(waba_id:, name:, category:, language:, components:)
+    response = HTTParty.post(
+      "#{BASE_URI}/#{@api_version}/#{waba_id}/message_templates",
+      headers: request_headers,
+      body: {
+        name: name,
+        category: category,
+        language: language,
+        components: components
+      }.to_json
+    )
+
+    parsed = JSON.parse(response.body)
+    if response.success?
+      Rails.logger.info("✅ WhatsApp template created in Meta: #{response['id']}")
+    else
+      Rails.logger.error("❌ Failed to create WhatsApp template: #{response}")
+    end
+
+    parsed
+  rescue StandardError => e
+    Rails.logger.error("🔥 Error in FacebookApiClient#create_template: #{e.message}")
+    { 'error' => { 'message' => e.message } }
+  end
+
+  def update_template(waba_id:, template_id:, components:)
+    response = HTTParty.post(
+      "#{BASE_URI}/#{@api_version}/#{waba_id}/message_templates/#{template_id}",
+      headers: request_headers,
+      body: { components: components }.to_json
+    )
+
+    parsed = JSON.parse(response.body)
+    if response.success?
+      Rails.logger.info("✅ WhatsApp template updated in Meta: #{template_id}")
+    else
+      Rails.logger.error("❌ Failed to update WhatsApp template: #{response}")
+    end
+
+    parsed
+  rescue StandardError => e
+    Rails.logger.error("🔥 Error in FacebookApiClient#update_template: #{e.message}")
+    { 'error' => { 'message' => e.message } }
+  end
+
+  def delete_template(waba_id:, template_name:)
+    response = HTTParty.delete(
+      "#{BASE_URI}/#{@api_version}/#{waba_id}/message_templates",
+      headers: request_headers,
+      query: { name: template_name }
+    )
+
+    parsed = JSON.parse(response.body)
+    if response.success?
+      Rails.logger.info("✅ WhatsApp template deleted in Meta: #{template_name}")
+    else
+      Rails.logger.error("🗑️ Failed to delete WhatsApp template: #{response}")
+    end
+
+    parsed
+  rescue StandardError => e
+    Rails.logger.error("🔥 Error en FacebookApiClient#delete_template: #{e.message}")
+    { 'error' => { 'message' => e.message } }
+  end
+
   def exchange_code_for_token(code)
     response = HTTParty.get(
       "#{BASE_URI}/#{@api_version}/oauth/access_token",

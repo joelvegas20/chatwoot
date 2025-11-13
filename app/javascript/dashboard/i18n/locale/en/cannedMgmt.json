@@ -26,6 +26,16 @@
           "PLACEHOLDER": "Please enter a short code.",
           "ERROR": "Short Code is required."
         },
+        "INBOX": {
+          "LABEL": "Inbox",
+          "PLACEHOLDER": "Select inbox to associate canned response.",
+          "ERROR": "Inbox is required."
+        },
+        "TEMPLATE_CATEGORY": {
+          "LABEL": "Template Category",
+          "PLACEHOLDER": "Select template category to associate canned response.",
+          "ERROR": "Template Category is required."
+        },
         "CONTENT": {
           "LABEL": "Message",
           "PLACEHOLDER": "Please write the message you want to save as a template to use later.",
@@ -46,6 +56,16 @@
           "LABEL": "Short code",
           "PLACEHOLDER": "Please enter a shortcode.",
           "ERROR": "Short code is required."
+        },
+        "INBOX": {
+          "LABEL": "Inbox",
+          "PLACEHOLDER": "Select inbox to associate canned response.",
+          "ERROR": "Inbox is required."
+        },
+        "TEMPLATE_CATEGORY": {
+          "LABEL": "Template Category",
+          "PLACEHOLDER": "Select template category to associate canned response.",
+          "ERROR": "Template Category is required."
         },
         "CONTENT": {
           "LABEL": "Message",

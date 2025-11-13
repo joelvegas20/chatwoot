@@ -15,6 +15,19 @@ as well as a link to its edit page.
 
 [1]: http://www.rubydoc.info/gems/administrate/Administrate/Page/Show %>
 
+<% content_for(:stylesheet) do %>
+  <style>
+    .button {
+      background-color: #cd6525 !important;
+      border-color: #cd6525 !important;
+    }
+    .button:hover {
+      background-color: #b85520 !important;
+      border-color: #b85520 !important;
+    }
+  </style>
+<% end %>
+
   <% content_for(:title) do
     t("administrate.actions.show_resource", name: page.page_title)
   end %>

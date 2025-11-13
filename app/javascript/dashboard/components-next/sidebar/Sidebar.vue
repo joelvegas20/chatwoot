@@ -71,6 +71,7 @@ const contactCustomViews = useMapGetter('customViews/getContactCustomViews');
 const conversationCustomViews = useMapGetter(
   'customViews/getConversationCustomViews'
 );
+const sidebarApps = useMapGetter('sidebarApps/getRecords');
 
 onMounted(() => {
   store.dispatch('labels/get');
@@ -80,6 +81,7 @@ onMounted(() => {
   store.dispatch('attributes/get');
   store.dispatch('customViews/get', 'conversation');
   store.dispatch('customViews/get', 'contact');
+  store.dispatch('sidebarApps/get');
 });
 
 const sortedInboxes = computed(() =>
@@ -128,7 +130,7 @@ const menuItems = computed(() => {
       to: accountScopedRoute('inbox_view'),
       activeOn: ['inbox_view', 'inbox_view_conversation'],
       getterKeys: {
-        count: 'notifications/getUnreadCount',
+        badge: 'notifications/getHasUnreadNotifications',
       },
     },
     {
@@ -231,11 +233,6 @@ const menuItems = computed(() => {
           name: 'Responses',
           label: t('SIDEBAR.CAPTAIN_RESPONSES'),
           to: accountScopedRoute('captain_responses_index'),
-        },
-        {
-          name: 'Tools',
-          label: t('SIDEBAR.CAPTAIN_TOOLS'),
-          to: accountScopedRoute('captain_tools_index'),
         },
       ],
     },
@@ -405,6 +402,24 @@ const menuItems = computed(() => {
       ],
     },
     {
+      name: 'Sidebar Apps',
+      label: t('INTEGRATION_SETTINGS.SIDEBAR_APPS.TITLE'),
+      icon: 'i-lucide-app-window',
+      to: accountScopedRoute('settings_integrations_sidebar_apps'),
+      activeOn: ['settings_integrations_sidebar_apps'],
+      children: sidebarApps.value
+        .filter(app => app.visible)
+        .map(app => ({
+          name: `sidebar-app-${app.id}`,
+          label: app.title,
+          icon: app.icon,
+          to: {
+            name: 'sidebar_app_view',
+            params: { appId: app.id },
+          },
+        })),
+    },
+    {
       name: 'Settings',
       label: t('SIDEBAR.SETTINGS'),
       icon: 'i-lucide-bolt',
@@ -426,12 +441,6 @@ const menuItems = computed(() => {
           label: t('SIDEBAR.TEAMS'),
           icon: 'i-lucide-users',
           to: accountScopedRoute('settings_teams_list'),
-        },
-        {
-          name: 'Settings Agent Assignment',
-          label: t('SIDEBAR.AGENT_ASSIGNMENT'),
-          icon: 'i-lucide-user-cog',
-          to: accountScopedRoute('assignment_policy_index'),
         },
         {
           name: 'Settings Inboxes',
@@ -500,12 +509,6 @@ const menuItems = computed(() => {
           to: accountScopedRoute('sla_list'),
         },
         {
-          name: 'Settings Security',
-          label: t('SIDEBAR.SECURITY'),
-          icon: 'i-lucide-shield',
-          to: accountScopedRoute('security_settings_index'),
-        },
-        {
           name: 'Settings Billing',
           label: t('SIDEBAR.BILLING'),
           icon: 'i-lucide-credit-card',
@@ -534,7 +537,7 @@ const menuItems = computed(() => {
     <section class="grid gap-2 mt-2 mb-4">
       <div class="flex items-center min-w-0 gap-2 px-2">
         <div class="grid flex-shrink-0 size-6 place-content-center">
-          <Logo class="size-4" />
+          <Logo class="size-10" />
         </div>
         <div class="flex-shrink-0 w-px h-3 bg-n-strong" />
         <SidebarAccountSwitcher

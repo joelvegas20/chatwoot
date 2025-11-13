@@ -863,7 +863,6 @@ watch(conversationFilters, (newVal, oldVal) => {
       @reset-filters="resetAndFetchData"
       @basic-filter-change="onBasicFilterChange"
     />
-
     <TeleportWithDirection
       v-if="showAddFoldersModal"
       to="#saveFilterTeleportTarget"

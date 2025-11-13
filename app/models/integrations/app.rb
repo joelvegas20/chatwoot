@@ -84,6 +84,8 @@ class Integrations::App
       account.webhooks.exists?
     when 'dashboard_apps'
       account.dashboard_apps.exists?
+    when 'sidebar_apps'
+      account.sidebar_apps.exists?
     else
       account.hooks.exists?(app_id: id)
     end

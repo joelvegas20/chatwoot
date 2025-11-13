@@ -13,7 +13,7 @@ const { replaceInstallationName } = useBranding();
 const uiFlags = getters['integrations/getUIFlags'];
 
 const integrationList = computed(
-  () => getters['integrations/getAppIntegrations'].value
+  () => store.getters['integrations/getAppIntegrations']
 );
 
 onMounted(() => {

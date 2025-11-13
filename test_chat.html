@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatwoot Web Chat Test</title>
+</head>
+<body>
+    <h1>Prueba del Chat Web de Chatwoot</h1>
+    <p>Esta página contiene el script del widget de chat para probar la funcionalidad.</p>
+
+    <script>
+      if (!window.chatwootLoaded) {
+        window.chatwootLoaded = true;
+        (function(d,t) {
+          var BASE_URL="http://localhost:3000";
+          var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+          g.src=BASE_URL+"/packs/js/sdk.js";
+          g.async = true;
+          s.parentNode.insertBefore(g,s);
+          g.onload=function(){
+            window.chatwootSDK.run({
+              websiteToken: '3CzCW36f2C9Epe2Hb7Vb2Zx7',
+              baseUrl: BASE_URL
+            })
+          }
+        })(document,"script");
+      }
+    </script>
+</body>
+</html>

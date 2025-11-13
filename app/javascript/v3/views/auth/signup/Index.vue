@@ -44,13 +44,12 @@ export default {
         <div class="px-8 max-w-[560px] w-full overflow-auto">
           <div class="mb-4">
             <img
-              :src="globalConfig.logo"
+              :src="globalConfig.logo || '/brand-assets/logo.png'"
               :alt="globalConfig.installationName"
               class="block w-auto h-8 dark:hidden"
             />
             <img
-              v-if="globalConfig.logoDark"
-              :src="globalConfig.logoDark"
+              :src="globalConfig.logoDark || '/brand-assets/logo_dark.png'"
               :alt="globalConfig.installationName"
               class="hidden w-auto h-8 dark:block"
             />

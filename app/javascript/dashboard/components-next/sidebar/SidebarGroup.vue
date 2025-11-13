@@ -111,9 +111,10 @@ const toggleTrigger = () => {
   if (
     hasAccessibleChildren.value &&
     !isExpanded.value &&
-    !hasActiveChild.value
+    !hasActiveChild.value &&
+    !props.to
   ) {
-    // if not already expanded, navigate to the first child
+    // if not already expanded, navigate to the first child (only if parent has no 'to')
     const firstItem = accessibleItems.value[0];
     router.push(firstItem.to);
   }

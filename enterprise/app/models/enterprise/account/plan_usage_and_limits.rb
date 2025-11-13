@@ -92,7 +92,7 @@ module Enterprise::Account::PlanUsageAndLimits
   end
 
   def plan_name
-    custom_attributes['plan_name']
+    'enterprise'
   end
 
   def agent_limits

@@ -1,20 +1,44 @@
 class Webhooks::WhatsappEventsJob < ApplicationJob
   queue_as :low
 
-  def perform(params = {})
-    channel = find_channel_from_whatsapp_business_payload(params)
+  def perform(params)
+    entry = params['entry']&.first
+    return unless entry
 
-    if channel_is_inactive?(channel)
-      Rails.logger.warn("Inactive WhatsApp channel: #{channel&.phone_number || "unknown - #{params[:phone_number]}"}")
-      return
-    end
+    changes = entry['changes'] || []
+    changes.each do |change|
+      value = change['value']
+      next unless value.present? && value['event'].present?
 
-    case channel.provider
-    when 'whatsapp_cloud'
-      Whatsapp::IncomingMessageWhatsappCloudService.new(inbox: channel.inbox, params: params).perform
-    else
-      Whatsapp::IncomingMessageService.new(inbox: channel.inbox, params: params).perform
+      event = value['event']
+      template_name = value['message_template_name']
+      template_id = value['message_template_id']
+
+      normalized_name = template_name.to_s.downcase.strip.gsub(/[^a-z0-9_]/, '')
+
+      canned_response = CannedResponse.find_by(template_id: template_id) ||
+                        CannedResponse.find_by('REPLACE(REPLACE(short_code, "/", ""), "-", "_") = ?', normalized_name)
+
+      if canned_response
+        case event
+        when 'APPROVED'
+          canned_response.update(status: 'approved')
+          Rails.logger.info("✅ Template approved in Meta: #{template_name} -> updated to 'approved'")
+        when 'REJECTED'
+          canned_response.update(status: 'rejected')
+          Rails.logger.info("❌ Template rejected in Meta: #{template_name} -> updated to 'rejected'")
+        when 'PENDING'
+          canned_response.update(status: 'pending')
+          Rails.logger.info("🕓 Template pending in Meta: #{template_name} -> updated to 'pending'")
+        else
+          Rails.logger.warn("⚠️ Unrecognized event type received: #{event}")
+        end
+      else
+        Rails.logger.warn("⚠️ No CannedResponse found for template #{template_name} (ID: #{template_id})")
+      end
     end
+  rescue StandardError => e
+    Rails.logger.error("🔥 Error processing WhatsApp webhook: #{e.message}")
   end
 
   private

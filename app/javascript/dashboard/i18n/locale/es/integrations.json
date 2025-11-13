@@ -191,6 +191,53 @@
     "CONNECT": {
       "BUTTON_TEXT": "Conectar"
     },
+    "SIDEBAR_APPS": {
+      "TITLE": "Aplicaciones de barra lateral",
+      "HEADER_BTN_TXT": "Agregar una nueva aplicación de barra lateral",
+      "SIDEBAR_TXT": "<p><b>Aplicaciones de barra lateral</b></p><p>Las aplicaciones de barra lateral permiten a las organizaciones incrustar una aplicación dentro de la barra lateral para proporcionar el contexto para los agentes de atención al cliente. Esta característica permite crear una aplicación de forma independiente e incrustarla dentro de la barra lateral para proporcionar información de usuario, sus pedidos, o su historial de pagos anterior.</p><p>Cuando incrustas tu aplicación usando la barra lateral en Chatwoot, tu aplicación obtendrá el contexto de la conversación y el contacto como un evento de ventana. Implementa un oyente para el evento del mensaje en tu página para recibir el contexto.</p><p>Para añadir una nueva aplicación de barra lateral, haga clic en el botón 'Agregar una nueva aplicación de barra lateral'.</p>",
+      "DESCRIPTION": "Las aplicaciones de barra lateral permiten a las organizaciones incrustar una aplicación dentro de la barra lateral para proporcionar el contexto para los agentes de soporte al cliente. Esta función le permite crear una aplicación de forma independiente e incrustada para proporcionar información de usuario, sus pedidos o su historial de pagos anterior.",
+      "LEARN_MORE": "Aprende más sobre aplicaciones de barra lateral",
+      "LIST": {
+        "404": "Todavía no hay aplicaciones de barra lateral configuradas en esta cuenta",
+        "LOADING": "Obteniendo aplicaciones de barra lateral...",
+        "TABLE_HEADER": { "NAME": "Nombre", "ENDPOINT": "Endpoint" },
+        "EDIT_TOOLTIP": "Editar aplicación",
+        "DELETE_TOOLTIP": "Eliminar aplicación"
+      },
+      "FORM": {
+        "TITLE_LABEL": "Nombre",
+        "TITLE_PLACEHOLDER": "Ingrese un nombre para su aplicación de barra lateral",
+        "TITLE_ERROR": "Se requiere un nombre para la aplicación de barra lateral",
+        "ICON_LABEL": "Ícono",
+        "ICON_PLACEHOLDER": "i-lucide-app-window",
+        "URL_LABEL": "Endpoint",
+        "URL_PLACEHOLDER": "Introduzca la URL del endpoint donde se aloja su aplicación",
+        "URL_ERROR": "Se requiere una URL válida",
+        "VISIBLE_LABEL": "Mostrar en la barra lateral"
+      },
+      "CREATE": {
+        "HEADER": "Añadir una nueva aplicación de barra lateral",
+        "FORM_SUBMIT": "Enviar",
+        "FORM_CANCEL": "Cancelar",
+        "API_SUCCESS": "Aplicación de barra lateral configurada correctamente",
+        "API_ERROR": "No pudimos crear una aplicación. Por favor, inténtalo de nuevo más tarde"
+      },
+      "UPDATE": {
+        "HEADER": "Editar aplicación de barra lateral",
+        "FORM_SUBMIT": "Actualizar",
+        "FORM_CANCEL": "Cancelar",
+        "API_SUCCESS": "Aplicación de barra lateral actualizada correctamente",
+        "API_ERROR": "No pudimos actualizar la aplicación. Por favor, inténtalo de nuevo más tarde"
+      },
+      "DELETE": {
+        "CONFIRM_YES": "Sí, eliminarlo",
+        "CONFIRM_NO": "No, mantenerlo",
+        "TITLE": "Confirme eliminación",
+        "MESSAGE": "¿Está seguro que desea eliminar la aplicación - {appName}?",
+        "API_SUCCESS": "Aplicación de barra lateral eliminada con éxito",
+        "API_ERROR": "No pudimos eliminar la aplicación. Por favor, inténtalo de nuevo más tarde"
+      }
+    },
     "DASHBOARD_APPS": {
       "TITLE": "Panel de aplicaciones",
       "HEADER_BTN_TXT": "Añadir una nueva aplicación",
@@ -487,12 +534,12 @@
           "ASSISTANT": "Assistant"
         },
         "BASIC_SETTINGS": {
-          "TITLE": "Configuraciones básicas",
-          "DESCRIPTION": ""
+          "TITLE": "Basic settings",
+          "DESCRIPTION": "Customize what the assistant says when ending a conversation or transferring to a human."
         },
         "SYSTEM_SETTINGS": {
           "TITLE": "System settings",
-          "DESCRIPTION": ""
+          "DESCRIPTION": "Customize what the assistant says when ending a conversation or transferring to a human."
         },
         "CONTROL_ITEMS": {
           "TITLE": "The Fun Stuff",
@@ -704,27 +751,10 @@
         "ERROR_MESSAGE": "There was an error creating the document, please try again."
       },
       "FORM": {
-        "TYPE": {
-          "LABEL": "Document Type",
-          "URL": "URL",
-          "PDF": "PDF File"
-        },
         "URL": {
           "LABEL": "URL",
           "PLACEHOLDER": "Enter the URL of the document",
           "ERROR": "Please provide a valid URL for the document"
-        },
-        "PDF_FILE": {
-          "LABEL": "PDF File",
-          "CHOOSE_FILE": "Choose PDF file",
-          "ERROR": "Please select a PDF file",
-          "HELP_TEXT": "Maximum file size: 10MB",
-          "INVALID_TYPE": "Please select a valid PDF file",
-          "TOO_LARGE": "File size exceeds 10MB limit"
-        },
-        "NAME": {
-          "LABEL": "Document Name (Optional)",
-          "PLACEHOLDER": "Enter a name for the document"
         },
         "ASSISTANT": {
           "LABEL": "Assistant",
@@ -752,115 +782,6 @@
         }
       }
     },
-    "CUSTOM_TOOLS": {
-      "HEADER": "Tools",
-      "ADD_NEW": "Create a new tool",
-      "EMPTY_STATE": {
-        "TITLE": "No custom tools available",
-        "SUBTITLE": "Create custom tools to connect your assistant with external APIs and services, enabling it to fetch data and perform actions on your behalf.",
-        "FEATURE_SPOTLIGHT": {
-          "TITLE": "Custom Tools",
-          "NOTE": "Custom tools allow your assistant to interact with external APIs and services. Create tools to fetch data, perform actions, or integrate with your existing systems to enhance your assistant's capabilities."
-        }
-      },
-      "FORM_DESCRIPTION": "Configure your custom tool to connect with external APIs",
-      "OPTIONS": {
-        "EDIT_TOOL": "Edit tool",
-        "DELETE_TOOL": "Delete tool"
-      },
-      "CREATE": {
-        "TITLE": "Create Custom Tool",
-        "SUCCESS_MESSAGE": "Custom tool created successfully",
-        "ERROR_MESSAGE": "Failed to create custom tool"
-      },
-      "EDIT": {
-        "TITLE": "Edit Custom Tool",
-        "SUCCESS_MESSAGE": "Custom tool updated successfully",
-        "ERROR_MESSAGE": "Failed to update custom tool"
-      },
-      "DELETE": {
-        "TITLE": "Delete Custom Tool",
-        "DESCRIPTION": "Are you sure you want to delete this custom tool? This action cannot be undone.",
-        "CONFIRM": "Sí, eliminar",
-        "SUCCESS_MESSAGE": "Custom tool deleted successfully",
-        "ERROR_MESSAGE": "Failed to delete custom tool"
-      },
-      "FORM": {
-        "TITLE": {
-          "LABEL": "Tool Name",
-          "PLACEHOLDER": "Order Lookup",
-          "ERROR": "Tool name is required"
-        },
-        "DESCRIPTION": {
-          "LABEL": "Descripción",
-          "PLACEHOLDER": "Looks up order details by order ID"
-        },
-        "HTTP_METHOD": {
-          "LABEL": "Method"
-        },
-        "ENDPOINT_URL": {
-          "LABEL": "Endpoint URL",
-          "PLACEHOLDER": "https://api.example.com/orders/{'{{'} order_id {'}}'}",
-          "ERROR": "Valid URL is required"
-        },
-        "AUTH_TYPE": {
-          "LABEL": "Authentication Type"
-        },
-        "AUTH_TYPES": {
-          "NONE": "Ninguna",
-          "BEARER": "Bearer Token",
-          "BASIC": "Basic Auth",
-          "API_KEY": "Clave de API"
-        },
-        "AUTH_CONFIG": {
-          "BEARER_TOKEN": "Bearer Token",
-          "BEARER_TOKEN_PLACEHOLDER": "Enter your bearer token",
-          "USERNAME": "Username",
-          "USERNAME_PLACEHOLDER": "Enter username",
-          "PASSWORD": "Contraseña",
-          "PASSWORD_PLACEHOLDER": "Enter password",
-          "API_KEY": "Header Name",
-          "API_KEY_PLACEHOLDER": "X-API-Key",
-          "API_VALUE": "Header Value",
-          "API_VALUE_PLACEHOLDER": "Enter API key value"
-        },
-        "PARAMETERS": {
-          "LABEL": "Parameters",
-          "HELP_TEXT": "Define the parameters that will be extracted from user queries"
-        },
-        "ADD_PARAMETER": "Add Parameter",
-        "PARAM_NAME": {
-          "PLACEHOLDER": "Parameter name (e.g., order_id)"
-        },
-        "PARAM_TYPE": {
-          "PLACEHOLDER": "Tipo"
-        },
-        "PARAM_TYPES": {
-          "STRING": "String",
-          "NUMBER": "Número",
-          "BOOLEAN": "Boolean",
-          "ARRAY": "Array",
-          "OBJECT": "Object"
-        },
-        "PARAM_DESCRIPTION": {
-          "PLACEHOLDER": "Description of the parameter"
-        },
-        "PARAM_REQUIRED": {
-          "LABEL": "Requerido"
-        },
-        "REQUEST_TEMPLATE": {
-          "LABEL": "Request Body Template (Optional)",
-          "PLACEHOLDER": "{'{'}\n  \"order_id\": \"{'{{'} order_id {'}}'}\"\n{'}'}"
-        },
-        "RESPONSE_TEMPLATE": {
-          "LABEL": "Response Template (Optional)",
-          "PLACEHOLDER": "Order {'{{'} order_id {'}}'} status: {'{{'} status {'}}'}"
-        },
-        "ERRORS": {
-          "PARAM_NAME_REQUIRED": "Parameter name is required"
-        }
-      }
-    },
     "RESPONSES": {
       "HEADER": "Preguntas frecuentes",
       "ADD_NEW": "Create new FAQ",
@@ -870,7 +791,6 @@
       "SELECTED": "{count} selected",
       "SELECT_ALL": "Select all ({count})",
       "UNSELECT_ALL": "Unselect all ({count})",
-      "SEARCH_PLACEHOLDER": "Search FAQs...",
       "BULK_APPROVE_BUTTON": "Approve",
       "BULK_DELETE_BUTTON": "Eliminar",
       "BULK_APPROVE": {

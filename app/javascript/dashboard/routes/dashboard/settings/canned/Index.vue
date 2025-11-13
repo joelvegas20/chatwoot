@@ -112,6 +112,9 @@ const tableHeaders = computed(() => {
   return [
     t('CANNED_MGMT.LIST.TABLE_HEADER.SHORT_CODE'),
     t('CANNED_MGMT.LIST.TABLE_HEADER.CONTENT'),
+    'Status', // TODO: Replace with i18n key when available
+    'Type', // TODO: Replace with i18n key when available
+    'Category', // TODO: Replace with i18n key when available
     t('CANNED_MGMT.LIST.TABLE_HEADER.ACTIONS'),
   ];
 });
@@ -184,6 +187,30 @@ const tableHeaders = computed(() => {
             <td class="py-4 ltr:pr-4 rtl:pl-4 md:break-all whitespace-normal">
               {{ cannedItem.content }}
             </td>
+
+            <td class="flex justify-start py-2 text-center">
+              <span
+                class="inline-block px-2 py-0.5 rounded-full text-xs font-medium"
+                :class="{
+                  'bg-yellow-100 text-yellow-800':
+                    cannedItem.status === 'pending',
+                  'bg-green-100 text-green-800':
+                    cannedItem.status === 'approved',
+                  'bg-red-100 text-red-800': cannedItem.status === 'rejected',
+                }"
+              >
+                {{ cannedItem.status }}
+              </span>
+            </td>
+
+            <td class="py-4 ltr:pr-4 rtl:pl-4 md:break-all whitespace-normal">
+              {{ cannedItem.canned_type }}
+            </td>
+
+            <td class="py-4 ltr:pr-4 rtl:pl-4 md:break-all whitespace-normal">
+              {{ cannedItem.category }}
+            </td>
+
             <td class="py-4 flex justify-end gap-1">
               <Button
                 v-tooltip.top="$t('CANNED_MGMT.EDIT.BUTTON_TEXT')"
@@ -218,6 +245,7 @@ const tableHeaders = computed(() => {
         :id="activeResponse.id"
         :edshort-code="activeResponse.short_code"
         :edcontent="activeResponse.content"
+        :edinbox-id="activeResponse.inbox_id"
         :on-close="hideEditPopup"
       />
     </woot-modal>
