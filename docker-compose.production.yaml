@@ -3,17 +3,20 @@ version: '3'
 services:
   base: &base
     image: chatwoot/chatwoot:latest
-    env_file: .env ## Change this file for customized env variables
+    env_file: .env
     volumes:
       - storage_data:/app/storage
+    networks:
+      - chatwoot-network
 
   rails:
     <<: *base
     depends_on:
       - postgres
       - redis
-    ports:
-      - '127.0.0.1:3000:3000'
+    # ELIMINAMOS la exposición directa de puertos al host
+    # ports:
+    #   - '127.0.0.1:3000:3000'
     environment:
       - NODE_ENV=production
       - RAILS_ENV=production
@@ -37,15 +40,17 @@ services:
   postgres:
     image: pgvector/pgvector:pg16
     restart: always
-    ports:
-      - '127.0.0.1:5432:5432'
+    # Solo accesible desde la red interna de Docker
+    # ports:
+    #   - '127.0.0.1:5432:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=chatwoot
       - POSTGRES_USER=postgres
-      # Please provide your own password.
-      - POSTGRES_PASSWORD=
+      - POSTGRES_PASSWORD=password
+    networks:
+      - chatwoot-network
 
   redis:
     image: redis:alpine
@@ -54,8 +59,30 @@ services:
     env_file: .env
     volumes:
       - redis_data:/data
+    # Solo accesible desde la red interna de Docker
+    # ports:
+    #   - '127.0.0.1:6379:6379'
+    networks:
+      - chatwoot-network
+
+  # AGREGAMOS NGINX como proxy reverso
+  nginx:
+    image: nginx:alpine
+    restart: always
     ports:
-      - '127.0.0.1:6379:6379'
+      - "80:80"
+      - "443:443"  # Para SSL después
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - rails
+    networks:
+      - chatwoot-network
+
+networks:
+  chatwoot-network:
+    driver: bridge
 
 volumes:
   storage_data:
