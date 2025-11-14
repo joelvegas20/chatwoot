@@ -105,13 +105,13 @@ export const CHART_FONT_FAMILY =
 export const DEFAULT_LINE_CHART = {
   type: 'line',
   fill: false,
-  borderColor: '#779BBB',
-  pointBackgroundColor: '#779BBB',
+  borderColor: '#FF8A4C',
+  pointBackgroundColor: '#FF8A4C',
 };
 
 export const DEFAULT_BAR_CHART = {
   type: 'bar',
-  backgroundColor: 'rgb(31, 147, 255)',
+  backgroundColor: 'rgb(255, 138, 76)',
 };
 
 const createChartConfig = yAxisTickCallback => ({

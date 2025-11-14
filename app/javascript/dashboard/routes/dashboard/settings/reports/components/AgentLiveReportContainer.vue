@@ -14,12 +14,12 @@ const agents = useMapGetter('agents/getAgents');
 
 const fetchData = () => store.dispatch('fetchAgentConversationMetric');
 
-const { startRefetching } = useLiveRefresh(fetchData);
+const { startRefetching } = useLiveRefresh(fetchData); // eslint-disable-line no-unused-vars
 
 onMounted(() => {
   store.dispatch('agents/get');
   fetchData();
-  startRefetching();
+  // startRefetching(); // Temporarily disabled to prevent freezing
 });
 </script>
 

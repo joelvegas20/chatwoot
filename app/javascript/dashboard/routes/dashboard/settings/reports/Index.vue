@@ -36,6 +36,9 @@ export default {
   },
   methods: {
     fetchAllData() {
+      if (!this.from || !this.to || this.from >= this.to) {
+        return;
+      }
       this.fetchAccountSummary();
       this.fetchChartData();
     },
@@ -91,14 +94,15 @@ export default {
       });
     },
     onFilterChange({ from, to, groupBy, businessHours }) {
-      this.from = from;
-      this.to = to;
+      const now = Math.floor(Date.now() / 1000);
+      this.from = Math.min(from, now);
+      this.to = Math.min(to, now);
       this.groupBy = groupBy;
       this.businessHours = businessHours;
       this.fetchAllData();
 
       useTrack(REPORTS_EVENTS.FILTER_REPORT, {
-        filterValue: { from, to, groupBy, businessHours },
+        filterValue: { from: this.from, to: this.to, groupBy, businessHours },
         reportType: 'conversations',
       });
     },

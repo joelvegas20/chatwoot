@@ -69,7 +69,11 @@ export default {
       if (!this.accountReport.data[metric.KEY]) {
         return {};
       }
-      const data = this.accountReport.data[metric.KEY];
+      let data = this.accountReport.data[metric.KEY];
+      // Filter out invalid data points
+      data = data.filter(
+        d => d.value != null && Number.isFinite(d.value) && d.timestamp
+      );
       const labels = data.map(element => {
         if (this.groupBy?.period === GROUP_BY_FILTER[2].period) {
           let week_date = new Date(fromUnixTime(element.timestamp));
@@ -165,7 +169,10 @@ export default {
         />
         <div v-else class="flex items-center justify-center h-72">
           <BarChart
-            v-if="accountReport.data[metric.KEY].length"
+            v-if="
+              accountReport.data[metric.KEY].length &&
+              accountReport.data[metric.KEY].length <= 100
+            "
             :collection="getCollection(metric)"
             :chart-options="getChartOptions(metric)"
           />

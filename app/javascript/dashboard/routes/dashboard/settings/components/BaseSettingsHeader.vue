@@ -82,7 +82,7 @@ const openInNewTab = url => {
       <CustomBrandPolicyWrapper :show-on-custom-branded-instance="false">
         <a
           v-if="helpURL && linkText"
-          :href="helpURL"
+          href="https://metrowan.notion.site/202ad9028a9680829b1ad7a21ca5d085?v=202ad9028a968131963b000c30108351"
           target="_blank"
           rel="noopener noreferrer"
           class="items-center hidden gap-1 text-sm font-medium sm:inline-flex w-fit text-n-blue-text hover:underline"

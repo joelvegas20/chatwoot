@@ -192,12 +192,12 @@ const handleInboxAction = ({ value }) => {
   fetchHeatmapData();
 };
 
-const { startRefetching } = useLiveRefresh(fetchHeatmapData);
+const { startRefetching } = useLiveRefresh(fetchHeatmapData); // eslint-disable-line no-unused-vars
 
 onMounted(() => {
   store.dispatch('inboxes/get');
   fetchHeatmapData();
-  startRefetching();
+  // startRefetching(); // Temporarily disabled to prevent freezing
 });
 </script>
 

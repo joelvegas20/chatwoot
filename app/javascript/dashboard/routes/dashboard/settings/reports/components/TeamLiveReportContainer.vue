@@ -14,12 +14,12 @@ const teams = useMapGetter('teams/getTeams');
 
 const fetchData = () => store.dispatch('fetchTeamConversationMetric');
 
-const { startRefetching } = useLiveRefresh(fetchData);
+const { startRefetching } = useLiveRefresh(fetchData); // eslint-disable-line no-unused-vars
 
 onMounted(() => {
   store.dispatch('teams/get');
   fetchData();
-  startRefetching();
+  // startRefetching(); // Temporarily disabled to prevent freezing
 });
 </script>
 

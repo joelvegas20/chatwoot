@@ -61,7 +61,7 @@ const fetchData = () => {
   store.dispatch('fetchAccountConversationMetric', params);
 };
 
-const { startRefetching } = useLiveRefresh(fetchData);
+const { startRefetching } = useLiveRefresh(fetchData); // eslint-disable-line no-unused-vars
 const [showDropdown, toggleDropdown] = useToggle();
 
 const handleAction = ({ value }) => {
@@ -72,7 +72,7 @@ const handleAction = ({ value }) => {
 
 onMounted(() => {
   fetchData();
-  startRefetching();
+  // startRefetching(); // Temporarily disabled to prevent freezing
 });
 </script>
 
