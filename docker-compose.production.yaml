@@ -2,12 +2,19 @@ version: '3'
 
 services:
   base: &base
-    image: chatwoot/chatwoot:latest
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile  # o rails.Dockerfile según necesites
+      args:
+        - BUNDLE_WITHOUT=development:test
+        - RAILS_ENV=production
+        - NODE_ENV=production
     env_file: .env
     volumes:
       - storage_data:/app/storage
     networks:
       - chatwoot-network
+    
 
   rails:
     <<: *base
@@ -46,7 +53,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=chatwoot
+      - POSTGRES_DB=chatwoot_production
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
     networks:

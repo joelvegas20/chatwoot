@@ -30,5 +30,11 @@ do
   sleep 2;
 done
 
+# Setup database for production
+echo "Setting up database..."
+bundle exec rails db:create
+bundle exec rails db:migrate
+bundle exec rails db:seed
+
 # Execute the main process of the container
 exec "$@"
