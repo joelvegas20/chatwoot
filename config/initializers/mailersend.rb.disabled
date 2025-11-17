@@ -1,0 +1,75 @@
+require 'net/http'
+require 'json'
+require 'action_mailer'
+
+puts "=== MAILERSEND INITIALIZER LOADED (HTTP VERSION) ==="
+puts "API Key present: #{ENV['MAILERSEND_API_KEY'] ? 'YES' : 'NO'}"
+
+# Custom ActionMailer delivery method for Mailersend API
+class MailersendApiDelivery
+  def initialize(settings = {})
+    @api_key = ENV['MAILERSEND_API_KEY']
+    raise "MAILERSEND_API_KEY not configured" unless @api_key.present?
+    @api_url = 'https://api.mailersend.com/v1/email'
+  end
+
+  def deliver!(mail)
+    puts "=== MAILERSEND DELIVER! METHOD CALLED ==="
+    puts "API Key: #{@api_key ? 'PRESENT' : 'MISSING'}"
+    # Prepare recipients
+    to_recipients = mail.to.map { |email| { "email" => email } }
+    cc_recipients = mail.cc&.map { |email| { "email" => email, "type" => "cc" } } || []
+    bcc_recipients = mail.bcc&.map { |email| { "email" => email, "type" => "bcc" } } || []
+
+    # Prepare from
+    from_email = mail.from.first
+    from_name = mail[:from].display_names.first || ""
+
+    # Prepare content
+    subject = mail.subject
+    text_content = mail.text_part&.body&.to_s || mail.body.to_s
+    html_content = mail.html_part&.body&.to_s
+
+    # Build request payload
+    payload = {
+      "from" => {
+        "email" => from_email,
+        "name" => from_name
+      },
+      "to" => to_recipients,
+      "subject" => subject,
+      "text" => text_content
+    }
+
+    # Add CC and BCC if present
+    payload["cc"] = cc_recipients if cc_recipients.any?
+    payload["bcc"] = bcc_recipients if bcc_recipients.any?
+
+    # Add HTML content if present
+    payload["html"] = html_content if html_content
+
+    # Send via HTTP
+    uri = URI(@api_url)
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+
+    request = Net::HTTP::Post.new(uri)
+    request['Authorization'] = "Bearer #{@api_key}"
+    request['Content-Type'] = 'application/json'
+    request.body = payload.to_json
+
+    response = http.request(request)
+
+    unless response.code.to_i == 202
+      raise "Mailersend API error: #{response.code} - #{response.body}"
+    end
+  end
+end
+
+# Register the delivery method
+ActionMailer::Base.add_delivery_method :mailersend_api, MailersendApiDelivery
+
+# Configure ActionMailer to use Mailersend API if specified
+if ENV['EMAIL_DELIVERY_METHOD'] == 'mailersend_api'
+  ActionMailer::Base.delivery_method = :mailersend_api
+end

@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '3.3.10'
+ruby '3.4.4'
 
 ##-- base gems for rails --##
 gem 'rack-cors', '2.0.0', require: 'rack/cors'
@@ -43,6 +43,8 @@ gem 'down'
 gem 'gmail_xoauth'
 # Lock net-smtp to 0.3.4 to avoid issues with gmail_xoauth2
 gem 'net-smtp',  '~> 0.3.4'
+# SendGrid for email delivery
+gem 'sendgrid-ruby', '~> 6.7'
 # Prevent CSV injection
 gem 'csv-safe'
 
@@ -260,3 +262,4 @@ group :development, :test do
   gem 'spring'
   gem 'spring-watcher-listen'
 end
+

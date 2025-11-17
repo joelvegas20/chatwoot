@@ -72,20 +72,20 @@ function getDayOfTheWeek(date) {
 
 const COLOR_SCHEMES = {
   blue: [
-    'bg-n-orange-3 border border-n-orange-4/30',
-    'bg-n-orange-5 border border-n-orange-6/30',
-    'bg-n-orange-7 border border-n-orange-8/30',
-    'bg-n-orange-8 border border-n-orange-9/30',
-    'bg-n-orange-10 border border-n-orange-8/30',
-    'bg-n-orange-11 border border-n-orange-10/30',
+    'bg-n-slate-3 border border-n-slate-4/30',
+    'bg-n-slate-5 border border-n-slate-6/30',
+    'bg-n-slate-7 border border-n-slate-8/30',
+    'bg-n-slate-8 border border-n-slate-9/30',
+    'bg-n-slate-10 border border-n-slate-8/30',
+    'bg-n-slate-11 border border-n-slate-10/30',
   ],
   green: [
-    'bg-n-amber-3 border border-n-amber-4/30',
-    'bg-n-amber-5 border border-n-amber-6/30',
-    'bg-n-amber-7 border border-n-amber-8/30',
-    'bg-n-amber-8 border border-n-amber-9/30',
-    'bg-n-amber-10 border border-n-amber-8/30',
-    'bg-n-amber-11 border border-n-amber-10/30',
+    'bg-n-slate-4 border border-n-slate-5/30',
+    'bg-n-slate-6 border border-n-slate-7/30',
+    'bg-n-slate-8 border border-n-slate-9/30',
+    'bg-n-slate-9 border border-n-slate-10/30',
+    'bg-n-slate-11 border border-n-slate-9/30',
+    'bg-n-slate-12 border border-n-slate-11/30',
   ],
 };
 

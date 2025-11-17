@@ -16,6 +16,22 @@ class ApplicationMailer < ActionMailer::Base
     end
   end
 
+  # Override default mail method to ensure proper HTML rendering
+  def mail(headers = {})
+    # Ensure content type is set for HTML emails
+    headers[:content_type] ||= 'text/html'
+
+    # Call the parent mail method with proper format handling
+    super(headers) do |format|
+      if block_given?
+        yield format
+      elsif format.respond_to?(:html)
+        # Ensure HTML format is used
+        format.html { render }
+      end
+    end
+  end
+
   rescue_from(*ExceptionList::SMTP_EXCEPTIONS, with: :handle_smtp_exceptions)
 
   def smtp_config_set_or_development?
